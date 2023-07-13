@@ -1,0 +1,22 @@
+<html>
+    <head>
+    </head>
+    <body>
+        <p>choose the user you want to login and the user you want to send message.</p>
+        <div>
+            userId: <input type="text" id="userId">
+            receiverId: <input type="text" id="receiverId">
+            <!-- Connect or Disconnect WebSocket Server -->
+            <button id="connect">Connect</button>
+            <button id="disconnect">Disconnect</button>
+        </div>
+        <hr>
+        <!-- Send Message to Server -->
+        <div>
+            Message to another: <input type="text" id="sendMsg" ><button id="sendBtn">Send</button>
+        </div>
+
+        <!-- Import index.js after UI rendered -->
+        <script src='./index.js'></script>
+    </body>
+</html>

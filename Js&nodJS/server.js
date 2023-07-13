@@ -1,3 +1,5 @@
+// Announce to every user
+
 // import library
 const express = require('express')
 const ServerSocket = require('ws').Server   // 引用 Server

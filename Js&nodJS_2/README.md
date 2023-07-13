@@ -1,4 +1,4 @@
-# Announce to every user
+# Send message to another user
 Before running this practice, first you should install "express" and "websocket" for server.
 ```
 npm install express
