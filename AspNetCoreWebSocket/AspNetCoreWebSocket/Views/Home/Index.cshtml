@@ -1,0 +1,98 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="container" id="app">
+    <div class="row">
+        <input class="col-4 m-1" id="userName" />
+        <input class="col-6 m-1" id="message" placeholder="message" />
+        <button class="col-1 m-1" id="send">Send</button>
+    </div>
+    <div class="p-2 chat">
+        <ul id="list">
+        </ul>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script>
+        // 設置 WebSocket 參數
+        var socket;
+        var l = document.location;
+        var scheme = l.protocol === 'https:' ? 'wss' : 'ws';
+        var port = l.port ? (':' + l.port) : '';
+        var wsUrl = scheme + '://' + l.hostname + port + '/ws';
+        console.log(wsUrl);
+
+        function logWebSocketStatus(event) {
+            if (!socket) return;
+            var status = 'Unknown';
+            switch (socket.readyState) {
+                case WebSocket.CLOSED:
+                    status = 'Closed / Code = ' + event.code + ', Reason = ' + event.reason;
+                    break;
+                case WebSocket.CLOSING:
+                    status = 'Closing';
+                    break;
+                case WebSocket.OPEN:
+                    status = 'Open';
+                    break;
+                case WebSocket.CONNECTING:
+                    status = 'Connecting';
+                    break;
+            }
+        }
+
+        // 連線後，設置socket的事件
+        function connect() {
+            socket = new WebSocket(wsUrl);
+            socket.onopen = function () {
+                logWebSocketStatus();
+                userName.onchange();
+            };
+            socket.onclose = logWebSocketStatus;
+            socket.onerror = logWebSocketStatus;
+            socket.onmessage = function (e) {
+                processMessage(e.data);
+            }
+        }
+
+        // 伺服傳來訊息的處理
+        var list = document.getElementById('list');
+        function processMessage(data) {
+            let li = document.createElement('li');
+            li.innerHTML = "<span class=t></span><span class=u></span><span class=m></span>";
+            let p = data.split('\t');
+            li.querySelector('.t').innerText = p[0];
+            li.querySelector('.u').innerText = p[1];
+            li.querySelector('.m').innerText = p[2] || '';
+            list.appendChild(li);
+        }
+
+        function sendMessage(msg) {
+            if (socket && socket.readyState == WebSocket.OPEN)
+                socket.send(msg);
+        }
+
+        connect();
+
+        // 設置前後端 userName
+        var userName = document.getElementById('userName');
+        userName.value = 'User' + (new Date().getTime() % 10000);
+        userName.onchange = function () {
+            sendMessage('/USER ' + userName.value);
+        };
+
+        // 設置前端訊息傳送事件
+        var message = document.getElementById('message');
+        var send = document.getElementById('send');
+        message.addEventListener('keydown', function (e) {
+            if (e.keyCode === 13) send.click();
+        });
+        send.addEventListener('click', function () {
+            sendMessage(message.value);
+        });
+
+    </script>
+}

@@ -17,6 +17,7 @@ const wss = new ServerSocket({ server })
 wss.on('connection', (ws, req) => {
     console.log('[Open connected]')
     ws.id = req.headers['sec-websocket-key'].substring(0, 8)
+    // send message back to client
     ws.send(`[Client ${ws.id} is connected!]`)
 
     // Listen for messages from client

@@ -18,15 +18,15 @@ function connect() {
     // Create WebSocket connection
     ws = new WebSocket(`ws://localhost:8080?userId=${userId.value}&receiverId=${receiverId.value}`) 
     
-    // ws = new WebSocket('ws://192.168.17.35:58095') 
     // 在開啟連線時執行
     ws.onopen = () => {
         console.log('[open connection]')
-        // Listen for messages from Server
-        ws.onmessage = event => {
-            console.log(`[Message from server]:\n %c${event.data}` , 'color: blue')
-        }
     }
+    // Listen for messages from Server
+    ws.onmessage = event => {
+        console.log(`[Message from server]:\n %c${event.data}` , 'color: blue')
+    }
+    // ws.onerror
 }
 
 function sendMessage(msg) {

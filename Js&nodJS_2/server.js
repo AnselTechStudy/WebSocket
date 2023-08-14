@@ -26,7 +26,9 @@ wss.on('connection', (ws, req) => {
     let userId = parameters.query.userId;
     let receiverId = parameters.query.receiverId;
 
+    // setup client.id
     ws.id = userId;
+    // send message back to client
     ws.send(`[Client ${ws.id} is connected!]`)
 
     // Listen for messages from client
@@ -43,7 +45,6 @@ wss.on('connection', (ws, req) => {
         // Send message
         if (receiver == undefined) {
             let msg = `Not find receiver userId:${receiverId}`;
-            console.log(msg);
             ws.send(msg);
         } else {
             receiver.send(`To ${receiverId}\n From ${ws.id}: ${data}`)

@@ -18,7 +18,6 @@ function connect() {
     // Create WebSocket connection
     ws = new WebSocket('ws://localhost:8080') 
     
-    // ws = new WebSocket('ws://192.168.17.35:58095') 
     // 在開啟連線時執行
     ws.onopen = () => {
         console.log('[open connection]')
