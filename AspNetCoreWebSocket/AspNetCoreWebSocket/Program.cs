@@ -1,5 +1,5 @@
+using AspNetCoreWebSocket.Middleware;
 using AspNetCoreWebSocket.Models;
-using System.Net.WebSockets;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,38 +38,10 @@ var webSocketOptions = new WebSocketOptions
 };
 app.UseWebSockets(webSocketOptions);
 
-app.Use(async (context, next) =>
-{
-    if (context.Request.Path == "/ws")
-    {
-        if (context.WebSockets.IsWebSocketRequest)
-        {
-            using (WebSocket ws = await context.WebSockets.AcceptWebSocketAsync())
-            {
-                // 在Configure使用DI註冊的 WebSocketHandler 服務
-                var wsHandler = context.RequestServices.GetRequiredService<WebSocketHandler>();
-                await wsHandler.ProcessWebSocket(ws);
-            }
-        }
-        else
-            context.Response.StatusCode = (int)System.Net.HttpStatusCode.BadRequest;
-    }
-    else if (context.Request.Path == "/pws")
-    {
-        if (context.WebSockets.IsWebSocketRequest)
-        {
-            using (WebSocket ws = await context.WebSockets.AcceptWebSocketAsync())
-            {
-                // 在Configure使用DI註冊的 WebSocketAdmin 服務
-                var webSocketAdmin = context.RequestServices.GetRequiredService<WebSocketAdmin>();
-                await webSocketAdmin.WSocketAdminHandler(ws, webSocketAdmin);
-            }
-        }
-        else
-            context.Response.StatusCode = (int)System.Net.HttpStatusCode.BadRequest;
-    }
-    else await next();
-});
+// 加入自訂的 WebSocket Middleware
+app.UseMiddleware<WebSocketHandlerMiddleware>();
+app.UseMiddleware<WebSocketAdminMiddleware>();
+
 
 app.MapControllerRoute(
     name: "default",

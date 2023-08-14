@@ -52,6 +52,7 @@
                     status = 'Connecting';
                     break;
             }
+            console.log(status);
         }
 
         // 連線後，設置socket的事件
@@ -63,6 +64,7 @@
             };
             socket.onclose = logWebSocketStatus;
             socket.onerror = logWebSocketStatus;
+            // 伺服器來訊事件
             socket.onmessage = function (e) {
                 processMessage(e.data);
             }
