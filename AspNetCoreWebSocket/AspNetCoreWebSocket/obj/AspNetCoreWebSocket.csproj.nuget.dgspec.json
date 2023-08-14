@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\b.Coding\\d.AnselCoding\\AspNetCoreWebSocket\\AspNetCoreWebSocket\\AspNetCoreWebSocket.csproj": {}
+    "D:\\b.Coding\\b.Coding develop\\WebSocket\\AspNetCoreWebSocket\\AspNetCoreWebSocket\\AspNetCoreWebSocket.csproj": {}
   },
   "projects": {
-    "D:\\b.Coding\\d.AnselCoding\\AspNetCoreWebSocket\\AspNetCoreWebSocket\\AspNetCoreWebSocket.csproj": {
+    "D:\\b.Coding\\b.Coding develop\\WebSocket\\AspNetCoreWebSocket\\AspNetCoreWebSocket\\AspNetCoreWebSocket.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\b.Coding\\d.AnselCoding\\AspNetCoreWebSocket\\AspNetCoreWebSocket\\AspNetCoreWebSocket.csproj",
+        "projectUniqueName": "D:\\b.Coding\\b.Coding develop\\WebSocket\\AspNetCoreWebSocket\\AspNetCoreWebSocket\\AspNetCoreWebSocket.csproj",
         "projectName": "AspNetCoreWebSocket",
-        "projectPath": "D:\\b.Coding\\d.AnselCoding\\AspNetCoreWebSocket\\AspNetCoreWebSocket\\AspNetCoreWebSocket.csproj",
+        "projectPath": "D:\\b.Coding\\b.Coding develop\\WebSocket\\AspNetCoreWebSocket\\AspNetCoreWebSocket\\AspNetCoreWebSocket.csproj",
         "packagesPath": "C:\\Users\\larry\\.nuget\\packages\\",
-        "outputPath": "D:\\b.Coding\\d.AnselCoding\\AspNetCoreWebSocket\\AspNetCoreWebSocket\\obj\\",
+        "outputPath": "D:\\b.Coding\\b.Coding develop\\WebSocket\\AspNetCoreWebSocket\\AspNetCoreWebSocket\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

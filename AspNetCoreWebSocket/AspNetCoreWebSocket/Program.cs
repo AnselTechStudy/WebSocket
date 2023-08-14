@@ -6,8 +6,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-// 註冊DI WebSocketHandler 處理服務
+// 註冊DI WebSocketHandler 處理公開聊天室服務
 builder.Services.AddSingleton<WebSocketHandler>();
+// 註冊DI WebSocketAdmin 處理私人聊天室服務
+builder.Services.AddSingleton<WebSocketAdmin>();
 
 var app = builder.Build();
 
@@ -44,9 +46,23 @@ app.Use(async (context, next) =>
         {
             using (WebSocket ws = await context.WebSockets.AcceptWebSocketAsync())
             {
-                // 使用DI註冊的 WebSocketHandler 服務
+                // 在Configure使用DI註冊的 WebSocketHandler 服務
                 var wsHandler = context.RequestServices.GetRequiredService<WebSocketHandler>();
                 await wsHandler.ProcessWebSocket(ws);
+            }
+        }
+        else
+            context.Response.StatusCode = (int)System.Net.HttpStatusCode.BadRequest;
+    }
+    else if (context.Request.Path == "/pws")
+    {
+        if (context.WebSockets.IsWebSocketRequest)
+        {
+            using (WebSocket ws = await context.WebSockets.AcceptWebSocketAsync())
+            {
+                // 在Configure使用DI註冊的 WebSocketAdmin 服務
+                var webSocketAdmin = context.RequestServices.GetRequiredService<WebSocketAdmin>();
+                await webSocketAdmin.WSocketAdminHandler(ws, webSocketAdmin);
             }
         }
         else
