@@ -85,12 +85,17 @@
                 socket.send(msg);
         }
 
+        // 初始化
         connect();
 
         // 設置前後端 userName
         //var userName = document.getElementById('userName');
         userName.value = 'User' + (new Date().getTime() % 10000);
         userName.onchange = function () {
+            //remove old user first
+            sendMessage('/Close ');
+
+            //add new user
             if (userName.value.trim() == "") {
                 alert("請填妥userName");
                 return;

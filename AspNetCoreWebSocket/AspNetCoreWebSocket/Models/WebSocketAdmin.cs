@@ -72,6 +72,9 @@ namespace AspNetCoreWebSocket.Models
                         else if (message.StartsWith("/RECEIVER "))
                             receiver = SetupReceiver(message, webSocket, webSocketAdmin);
 
+                        else if (message.StartsWith("/Close "))
+                            webSocketAdmin.RemoveWebSocket(userName);
+
                         else if (userName != String.Empty && receiver != String.Empty)
                             SendMessage($"{userName}:\t{message}", webSocket, receiver, webSocketAdmin);
                     }
@@ -80,9 +83,8 @@ namespace AspNetCoreWebSocket.Models
             } while (!result.CloseStatus.HasValue);
 
             // 移除關閉的 WebSocket 連線
-            webSocketAdmin.RemoveWebSocket(userName);
-
             await webSocket.CloseAsync(result.CloseStatus.Value, result.CloseStatusDescription, CancellationToken.None);
+            webSocketAdmin.RemoveWebSocket(userName);
         }
 
         private string SetupUser(string message, WebSocket webSocket, WebSocketAdmin webSocketAdmin)
